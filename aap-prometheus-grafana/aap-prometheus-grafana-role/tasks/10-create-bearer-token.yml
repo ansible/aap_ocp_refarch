@@ -6,12 +6,18 @@
     namespace: "{{ ansible_namespace }}"
   register: controller_host
 
+- debug:
+    var: controller_host
+
 - name: Get automation controller name
   kubernetes.core.k8s_info:
     api_version: automationcontroller.ansible.com/v1beta1
     kind: AutomationController
     namespace: "{{ ansible_namespace }}"
   register: automationcontroller_list
+
+- debug:
+    var: automationcontroller_list
 
 - name: Get AAP admin Password
   kubernetes.core.k8s_info:
