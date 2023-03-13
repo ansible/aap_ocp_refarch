@@ -5,4 +5,4 @@
     - kubernetes.core
     - community.general
   roles:
-    - aap-prometheus-grafana-role
+    - aap-prometheus-grafana
