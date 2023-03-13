@@ -1,0 +1,13 @@
+---
+# Assumption svc name is controllername-service
+- name: Create the monitor metrics label
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: "{{ automationcontroller_list | community.general.json_query('resources[0].metadata.name') }}-service"
+        namespace: "{{ ansible_namespace }}"
+        labels:
+          monitor: "{{ monitor_value }}"
