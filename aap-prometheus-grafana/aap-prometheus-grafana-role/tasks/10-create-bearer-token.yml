@@ -6,22 +6,12 @@
     namespace: "{{ ansible_namespace }}"
   register: controller_host
 
-- debug:
-    var: controller_host
-
 - name: Get automation controller name
   kubernetes.core.k8s_info:
     api_version: automationcontroller.ansible.com/v1beta1
     kind: AutomationController
     namespace: "{{ ansible_namespace }}"
   register: automationcontroller_list
-
-#- name: flatten object
-#  ansible.builtin.set_fact:
-#    paths: "{{ lookup('ansible.utils.to_paths', automationcontroller_list) }}"
-
-#- debug:
-#    var: paths
 
 - name: Get AAP admin Password
   kubernetes.core.k8s_info:
@@ -39,12 +29,8 @@
   ansible.builtin.set_fact:
     controller_url: "{{ automationcontroller_list.resources[0].status.URL | replace('https://', '') }}"
 
-#- debug:
-#    var: controller_url
-
 - name: Create a Bearer Token
   ansible.builtin.uri:
-    #url: "https://{{ username }}:{{ ansible_password }}@{{ controller_host.resources[0].spec.host }}/api/v2/users/{{ user_id }}/personal_tokens/"
     url: "https://{{ username }}:{{ ansible_password }}@{{ controller_url }}/api/v2/users/{{ user_id }}/personal_tokens/"
     method: POST
     headers:
