@@ -4,5 +4,6 @@
   collections:
     - kubernetes.core
     - community.general
+    - ansible.utils
   roles:
     - aap-prometheus-grafana-role
